@@ -1,0 +1,139 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://bin/native_ble.gdns" type="Script" id=1]
+[ext_resource path="res://scripts/main.gd" type="Script" id=2]
+
+[sub_resource type="Theme" id=5]
+Button/styles/disabled = null
+Button/styles/focus = null
+TextEdit/fonts/font = null
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id=6]
+
+[node name="Main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 5 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_vertical_guides_": [ 10.0 ]
+}
+
+[node name="TerminalBackground" type="Panel" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -104.0
+custom_styles/panel = SubResource( 7 )
+
+[node name="Terminal" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -492.0
+margin_top = 20.0
+margin_right = 492.0
+margin_bottom = 485.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 2
+theme = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "[color=#00FF00]Set service and characteristic UUID and select the type of interaction[/color]"
+text = "Set service and characteristic UUID and select the type of interaction"
+scroll_following = true
+selection_enabled = true
+
+[node name="Controls" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -268.0
+margin_top = -92.0
+margin_right = 268.0
+margin_bottom = -12.0
+
+[node name="Connect" type="Button" parent="Controls"]
+margin_right = 536.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 130, 0 )
+text = "Connect"
+
+[node name="Connection" type="HBoxContainer" parent="Controls"]
+margin_top = 24.0
+margin_right = 536.0
+margin_bottom = 48.0
+
+[node name="Service" type="LineEdit" parent="Controls/Connection"]
+margin_right = 265.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 265, 0 )
+text = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+placeholder_text = "Service"
+
+[node name="Characteristic" type="LineEdit" parent="Controls/Connection"]
+margin_left = 269.0
+margin_right = 534.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 265, 0 )
+text = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
+placeholder_text = "Characteristic"
+
+[node name="Interactions" type="HBoxContainer" parent="Controls"]
+margin_top = 52.0
+margin_right = 536.0
+margin_bottom = 76.0
+
+[node name="Notify" type="Button" parent="Controls/Interactions"]
+margin_right = 130.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 130, 0 )
+disabled = true
+toggle_mode = true
+text = "Notify"
+
+[node name="Read" type="Button" parent="Controls/Interactions"]
+margin_left = 134.0
+margin_right = 264.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 130, 0 )
+disabled = true
+text = "Read"
+
+[node name="Send" type="Button" parent="Controls/Interactions"]
+margin_left = 268.0
+margin_right = 398.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 130, 0 )
+disabled = true
+text = "Send"
+
+[node name="Data" type="LineEdit" parent="Controls/Interactions"]
+margin_left = 402.0
+margin_right = 535.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 133, 0 )
+placeholder_text = "Data to send"
+
+[node name="ESP32" type="Node" parent="."]
+script = ExtResource( 1 )
+server_adress = "823A7171-DD98-45E8-C0CD-5D272E51A0AE"
+
+[connection signal="pressed" from="Controls/Connect" to="." method="_on_Connect_pressed"]
+[connection signal="toggled" from="Controls/Interactions/Notify" to="." method="_on_Notify_toggled"]
+[connection signal="pressed" from="Controls/Interactions/Read" to="." method="_on_Read_pressed"]
+[connection signal="pressed" from="Controls/Interactions/Send" to="." method="_on_Send_pressed"]
+[connection signal="data_received" from="ESP32" to="." method="_on_ESP32_data_received"]
+[connection signal="device_connected" from="ESP32" to="." method="_on_ESP32_device_connected"]
+[connection signal="device_disconnected" from="ESP32" to="." method="_on_ESP32_device_disconnected"]
+[connection signal="notified" from="ESP32" to="." method="_on_ESP32_notified"]

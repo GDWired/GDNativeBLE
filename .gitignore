@@ -1,0 +1,7 @@
+.DS_Store
+.vscode
+.sconsign.dblite
+.mono
+.import
+*.os
+*.blob
