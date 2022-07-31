@@ -42,9 +42,10 @@ func _exit_tree() -> void:
 
 
 ## On connect button pressed
-func _on_Connect_pressed() -> void:	
+func _on_Connect_pressed() -> void:
 	if _esp32.is_connected():
 		_esp32.disconnect()
+		_notify.pressed = false
 	else:
 		# If the spinbox value is 0 use the default address
 		_esp32.connect(int(_device_index.value))
@@ -67,14 +68,11 @@ func _on_Scan_pressed() -> void:
 func _on_Notify_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		_esp32.notify(_service.text, _characteristic.text)
-		_read.disabled = true
-		_send.disabled = true
 		_service.editable = false
 		_characteristic.editable = false
 	else:
-		_writeln_in_terminal("[color=#FF0000]Unsubscribe not implemented[/color]")
-		_read.disabled = false
-		_send.disabled = false
+		# Not implemented on macOS...
+		_esp32.unsubscribe(_service.text, _characteristic.text)
 		_service.editable = true
 		_characteristic.editable = true
 

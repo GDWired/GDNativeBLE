@@ -48,8 +48,36 @@ grow_vertical = 0
 focus_mode = 2
 theme = SubResource( 6 )
 bbcode_enabled = true
-bbcode_text = "[color=#00FF00]Set service and characteristic UUID and select the type of interaction[/color]"
-text = "Set service and characteristic UUID and select the type of interaction"
+bbcode_text = "[color=#FF00FF]Welcome to the demo project of GDNativeBLE![/color]
+[color=#00FF00]
+Use the scan button to see the BLE devices and select the index using the spinning box and click on connect
+It is not possible to get the services and characteristics of a server, that's why the two line edits should be filled in manually
+Index 0 will attempt a connection using the default server address of the ESP32 node
+The first one (on the left) for the service, and the second one (on the right) for the characteristic
+If you are using the source in the folder esp32, the service GDNativeBLE is accessible at this address: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+This service has 3 characteristics:
+		- 1 RX in WRITE mode: 6E400002-B5A3-F393-E0A9-E50E24DCCA9E
+		- 2 TX in NOTIFY mode: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+		- 3 TX in READ mode: 6E400004-B5A3-F393-E0A9-E50E24DCCA9E
+If you send data to the first one, the rxValueCount value will be incremented, and your data will be sent to the serial @115200 baud
+If you subscribe to the second one, every second the value txValue will be incremented and sent
+If you read the data on the last one, you will get the rxValueCount value
+[/color]"
+text = "Welcome to the demo project of GDNativeBLE!
+
+Use the scan button to see the BLE devices and select the index using the spinning box and click on connect
+It is not possible to get the services and characteristics of a server, that's why the two line edits should be filled in manually
+Index 0 will attempt a connection using the default server address of the ESP32 node
+The first one (on the left) for the service, and the second one (on the right) for the characteristic
+If you are using the source in the folder esp32, the service GDNativeBLE is accessible at this address: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+This service has 3 characteristics:
+		- 1 RX in WRITE mode: 6E400002-B5A3-F393-E0A9-E50E24DCCA9E
+		- 2 TX in NOTIFY mode: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+		- 3 TX in READ mode: 6E400004-B5A3-F393-E0A9-E50E24DCCA9E
+If you send data to the first one, the rxValueCount value will be incremented, and your data will be sent to the serial @115200 baud
+If you subscribe to the second one, every second the value txValue will be incremented and sent
+If you read the data on the last one, you will get the rxValueCount value
+"
 scroll_following = true
 selection_enabled = true
 
