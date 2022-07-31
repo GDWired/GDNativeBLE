@@ -45,7 +45,7 @@ void GDNativeBLE::_process(float delta) {
 
 void GDNativeBLE::_register_methods() {
 	// Properties
-	register_property<GDNativeBLE, String>("server_adress", &GDNativeBLE::server_address, "01:23:45:67:89:AB");
+	register_property<GDNativeBLE, String>("default_server_adress", &GDNativeBLE::server_address, "01:23:45:67:89:AB");
 
 	// Signals callbacks
 	register_signal<GDNativeBLE>((char *)"data_received", "node", GODOT_VARIANT_TYPE_OBJECT, "service", GODOT_VARIANT_TYPE_STRING, "characteristic", GODOT_VARIANT_TYPE_STRING, "data", GODOT_VARIANT_TYPE_STRING);
@@ -54,7 +54,7 @@ void GDNativeBLE::_register_methods() {
 	
 	register_signal<GDNativeBLE>((char *)"device_disconnected", "node", GODOT_VARIANT_TYPE_OBJECT, "message", GODOT_VARIANT_TYPE_STRING);
 	register_signal<GDNativeBLE>((char *)"device_connected", "node", GODOT_VARIANT_TYPE_OBJECT);
-	register_signal<GDNativeBLE>((char *)"device_found", "node", GODOT_VARIANT_TYPE_OBJECT, "name", GODOT_VARIANT_TYPE_STRING, "address", GODOT_VARIANT_TYPE_STRING, "discovered_count", GODOT_VARIANT_TYPE_INT);
+	register_signal<GDNativeBLE>((char *)"device_found", "node", GODOT_VARIANT_TYPE_OBJECT, "name", GODOT_VARIANT_TYPE_STRING, "address", GODOT_VARIANT_TYPE_STRING, "discovered_index", GODOT_VARIANT_TYPE_INT);
 	register_signal<GDNativeBLE>((char *)"scan_started", "node", GODOT_VARIANT_TYPE_OBJECT);
 	register_signal<GDNativeBLE>((char *)"scan_stopped", "node", GODOT_VARIANT_TYPE_OBJECT);
 
