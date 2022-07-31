@@ -5,3 +5,5 @@
 .import
 *.os
 *.blob
+bin/*
+!bin/.keep
