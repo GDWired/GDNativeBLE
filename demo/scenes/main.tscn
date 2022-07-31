@@ -145,7 +145,6 @@ placeholder_text = "Data to send"
 
 [node name="ESP32" type="Node" parent="."]
 script = ExtResource( 1 )
-server_adress = "823A7171-DD98-45E8-C0CD-5D272E51A0AE"
 
 [connection signal="pressed" from="Controls/ConnectScan/Connect" to="." method="_on_Connect_pressed"]
 [connection signal="pressed" from="Controls/ConnectScan/Scan" to="." method="_on_Scan_pressed"]

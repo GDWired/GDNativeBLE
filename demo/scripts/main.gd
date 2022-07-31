@@ -77,7 +77,6 @@ func _on_Notify_toggled(button_pressed: bool) -> void:
 		_send.disabled = false
 		_service.editable = true
 		_characteristic.editable = true
-		_esp32.disconnect()
 
 
 ## On read button pressed
