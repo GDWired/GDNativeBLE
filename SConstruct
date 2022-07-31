@@ -175,7 +175,7 @@ if platform == "osx":
     def change_id(self, arg, env, executor = None):
         sys_exec(["install_name_tool", "-id", "@rpath/%s" % lib_name_dylib , lib_path])
         sys_exec(["install_name_tool", "-change", "@rpath/libnativeble.dylib", "@loader_path/libnativeble.dylib", lib_path])
-        sys_exec(["cp", "bin/libgodotnativeble.osx.debug.64.dylib", "demo/bin/osx/"])
+        sys_exec(["cp", "bin/%s" % lib_name_dylib, "demo/addons/native_ble/osx/"])
     library = env.SharedLibrary(target=lib_path, source=sources)
     change_id_action = Action('', change_id)
 

@@ -7,37 +7,36 @@ using namespace godot;
 void GDNativeBLE::_init() {
 	// Initialize
 	server_address = "01:23:45:67:89:AB";
-	scan_timeout_ms = 5000;
 	disposed = false;
-    
+	
 	// Setup callback functions
-    ble_events.callback_on_device_disconnected = [&](std::string msg) {
+	ble_events.callback_on_device_disconnected = [&](std::string msg) {
 		if (!disposed) {
 			emit_signal("device_disconnected", this, String(msg.c_str()));
 		}
-    };
-    ble_events.callback_on_device_connected = [&]() {
+	};
+	ble_events.callback_on_device_connected = [&]() {
 		if (!disposed) {
 			emit_signal("device_connected", this);
 		}
-    };
-    ble_events.callback_on_scan_found = [&](NativeBLE::DeviceDescriptor device) {
+	};
+	ble_events.callback_on_scan_found = [&](NativeBLE::DeviceDescriptor device) {
 		if (!disposed) {
 			devices.push_back(device);
 			emit_signal("device_found", this, String(device.name.c_str()), String(device.address.c_str()), int(devices.size()));
 		}
-    };
-    ble_events.callback_on_scan_start = [&]() {
+	};
+	ble_events.callback_on_scan_start = [&]() {
 		if (!disposed) {
 			emit_signal("scan_started", this);
 		}
-    };
-    ble_events.callback_on_scan_stop = [&]() {
+	};
+	ble_events.callback_on_scan_stop = [&]() {
 		if (!disposed) {
 			emit_signal("scan_stopped", this);
 		}
-    };
-    ble.setup(ble_events);
+	};
+	ble.setup(ble_events);
 }
 
 void GDNativeBLE::_process(float delta) { 
@@ -46,8 +45,7 @@ void GDNativeBLE::_process(float delta) {
 
 void GDNativeBLE::_register_methods() {
 	// Properties
-    register_property<GDNativeBLE, String>("server_adress", &GDNativeBLE::server_address, "01:23:45:67:89:AB");
-    register_property<GDNativeBLE, unsigned int>("scan_timeout_ms", &GDNativeBLE::scan_timeout_ms, 5000);
+	register_property<GDNativeBLE, String>("server_adress", &GDNativeBLE::server_address, "01:23:45:67:89:AB");
 
 	// Signals callbacks
 	register_signal<GDNativeBLE>((char *)"data_received", "node", GODOT_VARIANT_TYPE_OBJECT, "service", GODOT_VARIANT_TYPE_STRING, "characteristic", GODOT_VARIANT_TYPE_STRING, "data", GODOT_VARIANT_TYPE_STRING);
@@ -97,8 +95,14 @@ const bool GDNativeBLE::is_connected() {
 	return ble.is_connected();
 }
 
-void GDNativeBLE::connect() {
-	ble.connect(server_address.utf8().get_data());
+void GDNativeBLE::connect(const unsigned int index) {
+	if(index == 0) {
+		ble.connect(server_address.utf8().get_data());
+	} else {
+		if (index <= devices.size()) {
+			ble.connect(devices[index - 1].address);
+		}
+	}
 }
 
 void GDNativeBLE::write_request(const String service, const String characteristic, const String data) {

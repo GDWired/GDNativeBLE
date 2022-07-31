@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://bin/native_ble.gdns" type="Script" id=1]
+[ext_resource path="res://addons/native_ble/native_ble.gdns" type="Script" id=1]
 [ext_resource path="res://scripts/main.gd" type="Script" id=2]
 
 [sub_resource type="Theme" id=5]
@@ -63,16 +63,34 @@ margin_top = -92.0
 margin_right = 268.0
 margin_bottom = -12.0
 
-[node name="Connect" type="Button" parent="Controls"]
+[node name="ConnectScan" type="HBoxContainer" parent="Controls"]
 margin_right = 536.0
-margin_bottom = 20.0
+margin_bottom = 24.0
+alignment = 1
+
+[node name="DeviceIndex" type="SpinBox" parent="Controls/ConnectScan"]
+margin_left = 97.0
+margin_right = 171.0
+margin_bottom = 24.0
+
+[node name="Connect" type="Button" parent="Controls/ConnectScan"]
+margin_left = 175.0
+margin_right = 305.0
+margin_bottom = 24.0
 rect_min_size = Vector2( 130, 0 )
 text = "Connect"
 
+[node name="Scan" type="Button" parent="Controls/ConnectScan"]
+margin_left = 309.0
+margin_right = 439.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 130, 0 )
+text = "Scan"
+
 [node name="Connection" type="HBoxContainer" parent="Controls"]
-margin_top = 24.0
+margin_top = 28.0
 margin_right = 536.0
-margin_bottom = 48.0
+margin_bottom = 52.0
 
 [node name="Service" type="LineEdit" parent="Controls/Connection"]
 margin_right = 265.0
@@ -90,9 +108,9 @@ text = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 placeholder_text = "Characteristic"
 
 [node name="Interactions" type="HBoxContainer" parent="Controls"]
-margin_top = 52.0
+margin_top = 56.0
 margin_right = 536.0
-margin_bottom = 76.0
+margin_bottom = 80.0
 
 [node name="Notify" type="Button" parent="Controls/Interactions"]
 margin_right = 130.0
@@ -129,11 +147,15 @@ placeholder_text = "Data to send"
 script = ExtResource( 1 )
 server_adress = "823A7171-DD98-45E8-C0CD-5D272E51A0AE"
 
-[connection signal="pressed" from="Controls/Connect" to="." method="_on_Connect_pressed"]
+[connection signal="pressed" from="Controls/ConnectScan/Connect" to="." method="_on_Connect_pressed"]
+[connection signal="pressed" from="Controls/ConnectScan/Scan" to="." method="_on_Scan_pressed"]
 [connection signal="toggled" from="Controls/Interactions/Notify" to="." method="_on_Notify_toggled"]
 [connection signal="pressed" from="Controls/Interactions/Read" to="." method="_on_Read_pressed"]
 [connection signal="pressed" from="Controls/Interactions/Send" to="." method="_on_Send_pressed"]
 [connection signal="data_received" from="ESP32" to="." method="_on_ESP32_data_received"]
 [connection signal="device_connected" from="ESP32" to="." method="_on_ESP32_device_connected"]
 [connection signal="device_disconnected" from="ESP32" to="." method="_on_ESP32_device_disconnected"]
+[connection signal="device_found" from="ESP32" to="." method="_on_ESP32_device_found"]
 [connection signal="notified" from="ESP32" to="." method="_on_ESP32_notified"]
+[connection signal="scan_started" from="ESP32" to="." method="_on_ESP32_scan_started"]
+[connection signal="scan_stopped" from="ESP32" to="." method="_on_ESP32_scan_stopped"]

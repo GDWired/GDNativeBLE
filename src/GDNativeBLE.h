@@ -18,7 +18,6 @@ namespace godot {
 
 			bool disposed;
 			String server_address;
-			unsigned int scan_timeout_ms;
 
 		public:
 			// Constructor
@@ -37,7 +36,7 @@ namespace godot {
 			const bool scan_is_active();
 			void scan_timeout(const unsigned int timeout_ms);
 			const bool is_connected();
-			void connect();
+			void connect(const unsigned int index = 0);
 			void write_request(const String service, const String characteristic, const String data);
 			void write_command(const String service, const String characteristic, const String data);
 			void read(const String service, const String characteristic);

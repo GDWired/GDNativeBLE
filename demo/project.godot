@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "",
 "class": "NativeBLE",
 "language": "NativeScript",
-"path": "res://bin/native_ble.gdns"
+"path": "res://addons/native_ble/native_ble.gdns"
 } ]
 _global_script_class_icons={
 "NativeBLE": ""
