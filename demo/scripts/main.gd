@@ -1,9 +1,9 @@
-# 
+# GDNativeBLE main interface
 # 
 # This project works with EPS32: the C++ BLE library is not fully implemented
 # so there is a lot of missing things like: unscuscribe impossible in macOS
 # discover services and characteristics not implemented
-
+class_name GDNativeBLE
 extends Node
 
 # Reference to child nodes
@@ -27,18 +27,13 @@ onready var _data: LineEdit = $Controls/Interactions/Data
 var _scan_thread: Thread = null # One million dollars error
 
 
-## Write new line in the terminal
-func _writeln_in_terminal(text: String) -> void:
-	_terminal.bbcode_text = _terminal.bbcode_text + '\n' + text
-
-
-## Disconnect at the end
+## Teardown
 func _exit_tree() -> void:
 	_esp32.dispose()
-	if _esp32.is_connected():
-		_esp32.disconnect()
 	if _scan_thread != null:
 		_scan_thread.wait_to_finish()
+	if _esp32.is_connected():
+		_esp32.disconnect()
 
 
 ## On connect button pressed
@@ -59,9 +54,9 @@ func _on_Scan_pressed() -> void:
 		_scan_thread = Thread.new()
 		var error := _scan_thread.start(_esp32, "scan_timeout", 5000)
 		if error != OK:
-			_writeln_in_terminal("[color=#FF0000]Something wrong happen: " + str(error) + "[/color]")
+			_terminal.writeln("Something wrong happen, error code: " + str(error), Color.red)
 	else:
-		_writeln_in_terminal("[color=#FF0000]Scan already started[/color]")
+		_terminal.writeln("Scan already started", Color.red)
 
 
 ## On notify button pressed
@@ -89,7 +84,7 @@ func _on_Send_pressed() -> void:
 
 ## On device connected
 func _on_ESP32_device_connected(__: Object) -> void:
-	_writeln_in_terminal("[color=#00FF00]Connected![/color]")
+	_terminal.writeln("Connected!", Color.green)
 	_connect.text = "Disconnect"
 	_notify.disabled = false
 	_read.disabled = false
@@ -98,7 +93,7 @@ func _on_ESP32_device_connected(__: Object) -> void:
 
 ## On device disconnected
 func _on_ESP32_device_disconnected(__: Object, message: String) -> void:
-	_writeln_in_terminal("[color=#FF0000]Disconnected: " + message + "[/color]")
+	_terminal.writeln("Disconnected: " + message, Color.red)
 	_connect.text = "Connect"
 	_notify.disabled = true
 	_read.disabled = true
@@ -107,24 +102,29 @@ func _on_ESP32_device_disconnected(__: Object, message: String) -> void:
 
 ## Notify callback
 func _on_ESP32_notified(__: Object, ___: String, ____: String, data: String) -> void:
-	_writeln_in_terminal("[color=#FF00FF]Notify[/color]: " + data)
+	_terminal.write("Notify: ", Color.fuchsia)
+	_terminal.writeln(data)
 
 
 ## Read callback
 func _on_ESP32_data_received(__: Object, ___: String, ____: String, data: String) -> void:
-	_writeln_in_terminal("[color=#FF00FF]Read[/color]: " + data)
+	_terminal.write("Read: ", Color.fuchsia)
+	_terminal.writeln(data)
 
 
 ## Scan start callback
 func _on_ESP32_scan_started(__: Object) -> void:
-	_writeln_in_terminal("[color=#FF00FF]Scan started for 5sec ...[/color]")
+	_terminal.writeln("Scan started for 5sec ...", Color.fuchsia)
 
 
 ## Scan stop callback
 func _on_ESP32_scan_stopped(__: Object) -> void:
-	_writeln_in_terminal("[color=#FF00FF]...scan finished[/color]")
+	_terminal.writeln("...scan finished", Color.fuchsia)
 
 
 ## Scan device found callback
 func _on_ESP32_device_found(__: Object, name: String, address: String, discovered_count: int) -> void:
-	_writeln_in_terminal("[color=#FF00FF]Found[/color]: " + str(discovered_count) + " " + name + " ([color=#00FF00]" + address + "[/color])")
+	_terminal.write("Found: ", Color.purple)
+	_terminal.write(str(discovered_count) + " " + name + " ")
+	_terminal.writeln(address, Color.green)
+

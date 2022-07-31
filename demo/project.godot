@@ -9,13 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "GDNativeBLE",
+"language": "GDScript",
+"path": "res://scripts/main.gd"
+}, {
 "base": "",
 "class": "NativeBLE",
 "language": "NativeScript",
 "path": "res://addons/native_ble/native_ble.gdns"
+}, {
+"base": "RichTextLabel",
+"class": "Terminal",
+"language": "GDScript",
+"path": "res://scripts/Terminal.gd"
 } ]
 _global_script_class_icons={
-"NativeBLE": ""
+"GDNativeBLE": "",
+"NativeBLE": "",
+"Terminal": ""
 }
 
 [application]

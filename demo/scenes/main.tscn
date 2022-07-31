@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/native_ble/native_ble.gdns" type="Script" id=1]
 [ext_resource path="res://scripts/main.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Terminal.gd" type="Script" id=3]
 
 [sub_resource type="Theme" id=5]
 Button/styles/disabled = null
@@ -62,7 +63,8 @@ This service has 3 characteristics:
 If you send data to the first one, the rxValueCount value will be incremented, and your data will be sent to the serial @115200 baud
 If you subscribe to the second one, every second the value txValue will be incremented and sent
 If you read the data on the last one, you will get the rxValueCount value
-[/color]"
+[/color]
+"
 text = "Welcome to the demo project of GDNativeBLE!
 
 Use the scan button to see the BLE devices and select the index using the spinning box and click on connect
@@ -77,9 +79,11 @@ This service has 3 characteristics:
 If you send data to the first one, the rxValueCount value will be incremented, and your data will be sent to the serial @115200 baud
 If you subscribe to the second one, every second the value txValue will be incremented and sent
 If you read the data on the last one, you will get the rxValueCount value
+
 "
 scroll_following = true
 selection_enabled = true
+script = ExtResource( 3 )
 
 [node name="Controls" type="VBoxContainer" parent="."]
 anchor_left = 0.5
