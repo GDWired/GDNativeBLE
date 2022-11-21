@@ -12,6 +12,6 @@ A BLE device such as the ESP32 is needed to run the godot project, the program u
 </p>
 
 
-The BLE library used in this project is deprecated (https://github.com/kdewald/nativeble), this project exists just for fun. I had planned to use a recent library (https://github.com/OpenBluetoothToolbox/SimpleBLE) but the code base is in c++17 and Godot 3 is in c++14, so I will do another project when this project is finished for Godot 4 which uses c++17.
+The BLE library used in this project is deprecated (https://github.com/kdewald/nativeble), this project exists just for fun. I have also implemented the library SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) you can find the source code here (https://github.com/GDWired/GDSimpleBLE).
 
-Works only on macOS for the moment (Linux and Windows are planned)
+Works only on macOS but should work on other platfroms.
